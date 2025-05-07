@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define PATH_HOST_DEFAULT  "/dev/tty.usbserial-2140"
+#define PATH_HOST_DEFAULT  "/dev/tty.usbserial-2110"
 
 /**
  * 初始化摄像头HOST串口通信
