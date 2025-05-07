@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-#define PATH_SLAVE_DEFAULT  "/dev/tty.usbserial-2140"
-
 /**
  * 初始化摄像头SLAVE串口通信
  * @param path 串口设备路径(如"/dev/ttyUSB0")
