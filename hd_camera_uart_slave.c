@@ -54,7 +54,6 @@ static void *notify_thread_function(void *arg) {
                                             &cmd,
                                             &payload_data_size_out,
                                             &payload_data_out);
-            free(payload_data_out);
             if (ret == 0) {
                 if (cmd == CMD_HEARTBEAT) {
                     // 处理心跳
@@ -84,7 +83,7 @@ static void *notify_thread_function(void *arg) {
     return NULL;
 }
 
-int hd_camera_uart_host_init(const char *path) {
+int hd_camera_uart_slave_init(const char *path) {
     printf("[uart]hd_camera_uart_host_init %s!\n",path);
     if (path == NULL) {
         printf("[uart]path is NULL.");
@@ -115,7 +114,7 @@ int hd_camera_uart_host_init(const char *path) {
     return 0;
 }
 
-void hd_camera_uart_host_deinit(){
+void hd_camera_uart_slave_deinit(){
     if (g_fd>=0){
         g_running= 0;
         close(g_fd);
