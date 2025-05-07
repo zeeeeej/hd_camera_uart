@@ -39,6 +39,19 @@ uint8_t hd_camera_protocol_cmd_heartbeat_resp_encode(
 }
 
 uint8_t hd_camera_protocol_cmd_heartbeat_req_decode(
+        const unsigned char  *        payload_data_in,
+        uint32_t                payload_data_size_in,
+        uint8_t*                ack_number_out
+){
+    if (payload_data_size_in == 1) {
+        *ack_number_out = payload_data_in[0];
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+uint8_t hd_camera_protocol_cmd_heartbeat_req_decode_with_data(
         const unsigned char  *        protocol_data_in,
         uint32_t                protocol_data_size_in,
         uint8_t*                slave_addr_out,
@@ -52,7 +65,7 @@ uint8_t hd_camera_protocol_cmd_heartbeat_req_decode(
 
     if (DEBUG){
         //printf("ret = %u payload_data_size=%u\n",ret,payload_data_size);
-        hd_camera_protocol_print_buffer(payload_data,payload_data_size,"hd_camera_protocol_cmd_heartbeat_req_decode::result");
+        hd_camera_protocol_print_buffer(payload_data,payload_data_size,"hd_camera_protocol_cmd_heartbeat_req_decode_with_data::result");
     }
 
     if (ret != 0) return -1;
@@ -65,6 +78,19 @@ uint8_t hd_camera_protocol_cmd_heartbeat_req_decode(
 }
 
 uint8_t hd_camera_protocol_cmd_heartbeat_resp_decode(
+        const unsigned char  *        payload_data_in,
+        uint32_t                payload_data_size_in,
+        uint8_t*                ack_number_out
+){
+    if (payload_data_size_in == 1) {
+        *ack_number_out = payload_data_in[0];
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
+uint8_t hd_camera_protocol_cmd_heartbeat_resp_decode_with_data(
         const unsigned char *protocol_data_in,
         uint32_t protocol_data_size_in,
         uint8_t *slave_addr_out,
@@ -91,13 +117,13 @@ uint8_t hd_camera_protocol_cmd_heartbeat_resp_decode(
 }
 
 
-uint8_t hd_camera_protocol_cmd_property_get_req(uint8_t slave_addr, uint8_t property_id) {
+uint8_t hd_camera_protocol_cmd_property_get_req_encode(uint8_t slave_addr, uint8_t property_id) {
     return 0;
 }
 
 uint8_t
-hd_camera_protocol_cmd_property_get_resp(uint8_t *slave_addr, uint32_t *len, uint8_t *property_id, uint8_t *result,
-                                         unsigned char **property_value) {
+hd_camera_protocol_cmd_property_get_resp_encode(uint8_t *slave_addr, uint32_t *len, uint8_t *property_id, uint8_t *result,
+                                                unsigned char **property_value) {
     return 0;
 }
 

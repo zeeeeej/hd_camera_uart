@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#define HEARTBEAT_INTERVAL              5 // 单位:秒
+
 // cmds
 #define CMD_HEARTBEAT                   0x01
 #define CMD_PROPERTY_GET                0x02
@@ -51,17 +53,45 @@ uint8_t hd_camera_protocol_cmd_heartbeat_resp_encode(
         uint8_t             ack_number_in
 );
 
-uint8_t hd_camera_protocol_cmd_heartbeat_req_decode(
+uint8_t hd_camera_protocol_cmd_heartbeat_req_decode_with_data(
         const unsigned char  *        protocol_data_in,
         uint32_t                protocol_data_size_in,
         uint8_t*                slave_addr_out,
         uint8_t*                ack_number_out
 );
 
-uint8_t hd_camera_protocol_cmd_heartbeat_resp_decode(
+uint8_t hd_camera_protocol_cmd_heartbeat_req_decode(
+        const unsigned char  *        payload_data_in,
+        uint32_t                payload_data_size_in,
+        uint8_t*                ack_number_out
+);
+
+
+
+/**
+ * 解析心跳 应答
+ * @param protocol_data_in          整条协议数据
+ * @param protocol_data_size_in     整条协议数据大小
+ * @param slave_addr_out            地址
+ * @param ack_number_out            序号
+ * @return
+ */
+uint8_t hd_camera_protocol_cmd_heartbeat_resp_decode_with_data(
         const unsigned char  *        protocol_data_in,
         uint32_t                protocol_data_size_in,
         uint8_t*                slave_addr_out,
+        uint8_t*                ack_number_out
+);
+
+/**
+ * 解析心跳 应答
+ * @param payload_data_in            payload
+ * @param payload_data_size_in       payload_size
+ * @param ack_number_out        序号
+ */
+uint8_t hd_camera_protocol_cmd_heartbeat_resp_decode(
+        const unsigned char  *        payload_data_in,
+        uint32_t                payload_data_size_in,
         uint8_t*                ack_number_out
 );
 
@@ -73,7 +103,7 @@ uint8_t hd_camera_protocol_cmd_heartbeat_resp_decode(
  * @param slave_addr        从机地址
  * @param property_id       属性ID
  */
-uint8_t hd_camera_protocol_cmd_property_get_req(uint8_t slave_addr, uint8_t property_id);
+uint8_t hd_camera_protocol_cmd_property_get_req_encode(uint8_t slave_addr, uint8_t property_id);
 
 /**
  * 查询属性 应答
@@ -86,13 +116,21 @@ uint8_t hd_camera_protocol_cmd_property_get_req(uint8_t slave_addr, uint8_t prop
  * @param result            返回值。0x00：成功，其他：失败
  * @param property_value    属性值
  */
-uint8_t hd_camera_protocol_cmd_property_get_resp(
+uint8_t hd_camera_protocol_cmd_property_get_resp_encode(
     uint8_t *slave_addr,
     uint32_t *len,
     uint8_t *property_id,
     uint8_t *result,
     unsigned char ** property_value
 );
+
+//uint8_t hd_camera_protocol_cmd_property_get_resp_decode(
+//        uint8_t *slave_addr,
+//        uint32_t *len,
+//        uint8_t *property_id,
+//        uint8_t *result,
+//        unsigned char ** property_value
+//);
 
 /**
  * 设置属性 请求

@@ -58,14 +58,13 @@ static void *notify_thread_function(void *arg) {
             if (ret == 0) {
                 if (cmd == CMD_HEARTBEAT) {
                     // 处理心跳
-                    uint8_t slave_addr_out2;
-                    uint8_t ack_number_out2;
+                    uint8_t ack_number_out;
 
                     ret = hd_camera_protocol_cmd_heartbeat_req_decode(
-                            data_buffer, len, &slave_addr_out2, &ack_number_out2
+                            payload_data_out, payload_data_size_out, &ack_number_out
                     );
                     if (ret == 0) {
-                        send_heartbeat(ack_number_out2);
+                        send_heartbeat(ack_number_out);
                     } else {
                         printf("[uart]heartbeat decode fail. ret=%u\n", ret);
                     }

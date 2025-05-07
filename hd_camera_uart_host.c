@@ -62,25 +62,25 @@ static void *notify_thread_function(void *arg) {
 
             if (ret == 0) {
                 if (cmd == CMD_HEARTBEAT) {
-                    // 处理心跳
-                    uint8_t slave_addr_out2;
-                    uint8_t ack_number_out2;
+                    // 处理心跳应答
+                    uint8_t ack_number_out;
                     ret = hd_camera_protocol_cmd_heartbeat_resp_decode(
-                            data_buffer, len, &slave_addr_out2, &ack_number_out2
+                            payload_data_out, payload_data_size_out, &ack_number_out
                     );
                     if (ret == 0) {
-                        if (ack_number_out2 == g_heartbeat_ack + 1) {
+                        if (ack_number_out == g_heartbeat_ack + 1) {
                             printf("[uart]heartbeat decode success.\n");
-                            sleep(1);
+                            sleep(HEARTBEAT_INTERVAL);
                             send_heartbeat();
                         } else {
-                            printf("[uart]heartbeat ack fail. %u != %u\n", ack_number_out2, g_heartbeat_ack);
+                            printf("[uart]heartbeat ack fail. %u != %u\n", ack_number_out, g_heartbeat_ack);
                         }
                     } else {
                         printf("[uart]heartbeat decode fail. ret=%u\n", ret);
                     }
                 } else if (cmd == CMD_PROPERTY_GET) {
-
+                    // 处理查询属应答
+                    // hd_camera_protocol_cmd_property_get_resp_encode()
                 } else {
                     printf("[uart]support cmd %u\n", cmd);
                 }

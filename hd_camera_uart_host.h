@@ -13,7 +13,7 @@
 int hd_camera_uart_host_init(const char *path);
 
 /**
- * 反初始化摄像头HOST串口通信
+ * 反初始化摄像头1HOST串口通信
  * @return 成功返回0，失败返回错误码
  */
 void hd_camera_uart_host_deinit(void);
